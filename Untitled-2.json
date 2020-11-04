@@ -1,0 +1,49 @@
+{
+    "orderId": "4326323",
+    "carrierCode": "fedex",
+    "serviceCode": "fedex_2day",
+    "packageCode": "package",
+    "confirmation": "none",
+    "shipDate": "2015-07-02",
+    "weight": {
+        "value": 48.0,
+        "units": "ounces",
+        "WeightUnits": 1
+    },
+    "dimensions": {
+        "units": "inches",
+        "length": 7.0,
+        "width": 5.0,
+        "height": 6.0
+    },
+    "insuranceOptions": {
+        "provider": "carrier",
+        "insureShipment": true,
+        "insuredValue": 200.0
+    },
+    "internationalOptions": {
+        "contents": null,
+        "customsItems": null,
+        "nonDelivery": null
+    },
+    "advancedOptions": {
+        "warehouseId": null,
+        "nonMachinable": false,
+        "saturdayDelivery": false,
+        "containsAlcohol": false,
+        "mergedOrSplit": false,
+        "mergedIds": [],
+        "parentId": null,
+        "storeId": 57245,
+        "customField1": "Custom data that you can add to an order. See Custom Field #2 & #3 for more info!",
+        "customField2": "Per UI settings, this information can appear on some carrier's shipping labels. See link below",
+        "customField3": "https://help.shipstation.com/hc/en-us/articles/206639957",
+        "source": "Webstore",
+        "billToParty": null,
+        "billToAccount": null,
+        "billToPostalCode": null,
+        "billToCountryCode": null,
+        "billToMyOtherAccount": null
+    },
+    "testLabel": true
+}

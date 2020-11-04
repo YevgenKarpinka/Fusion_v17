@@ -1,0 +1,6 @@
+{
+  "Message": "The request entity's media type 'text/plain' is not supported for this resource.",
+  "ExceptionMessage": "No MediaTypeFormatter is available to read an object of type 'Order' from content with media type 'text/plain'.",
+  "ExceptionType": "System.Net.Http.UnsupportedMediaTypeException",
+  "StackTrace": "   at System.Net.Http.HttpContentExtensions.ReadAsAsync[T](HttpContent content, Type type, IEnumerable`1 formatters, IFormatterLogger formatterLogger, CancellationToken cancellationToken)\r\n   at System.Net.Http.HttpContentExtensions.ReadAsAsync(HttpContent content, Type type, IEnumerable`1 formatters, IFormatterLogger formatterLogger, CancellationToken cancellationToken)\r\n   at System.Web.Http.ModelBinding.FormatterParameterBinding.ReadContentAsync(HttpRequestMessage request, Type type, IEnumerable`1 formatters, IFormatterLogger formatterLogger, CancellationToken cancellationToken)"
+}

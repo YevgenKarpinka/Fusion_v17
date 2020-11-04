@@ -1,0 +1,52 @@
+{
+    "orderId": 6721528,
+    "carrierCode": "fedex",
+    "serviceCode": "fedex_ground",
+    "packageCode": "package",
+    "confirmation": "none",
+    "shipDate": "2019-10-24",
+    "weight": {
+        "value": 71.68,
+        "units": "ounces",
+        "WeightUnits": 1
+    },
+    "insuranceOptions": {
+        "provider": null,
+        "insureShipment": false,
+        "insuredValue": 0.0
+    },
+    "internationalOptions": {
+        "contents": "merchandise",
+        "customsItems": [
+            {
+                "customsItemId": 2491611,
+                "description": "",
+                "quantity": 0,
+                "value": 0.0,
+                "harmonizedTariffCode": "",
+                "countryOfOrigin": "US"
+            }
+        ],
+        "nonDelivery": "return_to_sender"
+    },
+    "advancedOptions": {
+        "warehouseId": 135185,
+        "nonMachinable": false,
+        "saturdayDelivery": false,
+        "containsAlcohol": false,
+        "mergedOrSplit": false,
+        "mergedIds": [],
+        "parentId": null,
+        "storeId": 81381,
+        "customField1": null,
+        "customField2": null,
+        "customField3": null,
+        "source": null,
+        "billToParty": "my_other_account",
+        "billToAccount": null,
+        "billToPostalCode": null,
+        "billToCountryCode": null,
+        "billToMyOtherAccount": 68159
+    },
+    "testLabel": false
+}
