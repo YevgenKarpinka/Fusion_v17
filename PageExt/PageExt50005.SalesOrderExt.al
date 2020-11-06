@@ -28,13 +28,13 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
         }
         addafter(Status)
         {
-            field("IC Document No."; Rec."IC Document No.")
+            field("IC Document No."; "IC Document No.")
             {
                 Importance = Additional;
                 ApplicationArea = All;
                 Editable = false;
             }
-            field("Gross Weight"; ShipStationMgt.CalculateSalesOrderGrossWeight(Rec."No."))
+            field("Gross Weight"; ShipStationMgt.CalculateSalesOrderGrossWeight("No."))
             {
                 Importance = Promoted;
                 ApplicationArea = All;
@@ -42,7 +42,7 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
         }
         addafter("Shipping Agent Code")
         {
-            field("Agent Name"; Rec.GetShippingAgentName(Rec."Shipping Agent Code"))
+            field("Agent Name"; GetShippingAgentName("Shipping Agent Code"))
             {
                 Importance = Additional;
                 ApplicationArea = All;
@@ -51,7 +51,7 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
         }
         addafter("Shipping Agent Service Code")
         {
-            field("Service Description"; Rec.GetShippingAgentServiceDescription(Rec."Shipping Agent Code", Rec."Shipping Agent Service Code"))
+            field("Service Description"; GetShippingAgentServiceDescription("Shipping Agent Code", "Shipping Agent Service Code"))
             {
                 Importance = Additional;
                 ApplicationArea = All;
@@ -64,37 +64,37 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
             {
                 CaptionML = ENU = 'ShipStation', RUS = 'ShipStation';
 
-                field("ShipStation Order ID"; Rec."ShipStation Order ID")
+                field("ShipStation Order ID"; "ShipStation Order ID")
                 {
                     ApplicationArea = All;
 
                 }
-                field("ShipStation Order Key"; Rec."ShipStation Order Key")
+                field("ShipStation Order Key"; "ShipStation Order Key")
                 {
                     ApplicationArea = All;
 
                 }
-                field("ShipStation Status"; Rec."ShipStation Status")
+                field("ShipStation Status"; "ShipStation Status")
                 {
                     ApplicationArea = All;
 
                 }
-                field("ShipStation Shipment Amount"; Rec."ShipStation Shipment Amount")
+                field("ShipStation Shipment Amount"; "ShipStation Shipment Amount")
                 {
                     ApplicationArea = All;
 
                 }
-                field("ShipStation Shipment Cost"; Rec."ShipStation Shipment Cost")
+                field("ShipStation Shipment Cost"; "ShipStation Shipment Cost")
                 {
                     ApplicationArea = All;
                     Importance = Additional;
                 }
-                field("ShipStation Insurance Cost"; Rec."ShipStation Insurance Cost")
+                field("ShipStation Insurance Cost"; "ShipStation Insurance Cost")
                 {
                     ApplicationArea = All;
                     Importance = Additional;
                 }
-                field("ShipStation Shipment ID"; Rec."ShipStation Shipment ID")
+                field("ShipStation Shipment ID"; "ShipStation Shipment ID")
                 {
                     ApplicationArea = All;
                     Importance = Additional;
@@ -169,8 +169,8 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
                     ApplicationArea = All;
                     CaptionML = ENU = 'Create Order', RUS = 'Создать Заказ';
                     Image = CreateDocuments;
-                    Visible = (Rec.Status = Rec.Status::Released)
-                                and (Rec."ShipStation Shipment ID" = '');
+                    Visible = (Status = Status::Released)
+                                and ("ShipStation Shipment ID" = '');
 
                     trigger OnAction()
                     var
@@ -205,7 +205,7 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
                         pageShippingRates.LookupMode(true);
                         if pageShippingRates.RunModal() = Action::LookupOK then begin
                             pageShippingRates.GetAgentServiceCodes(recSAS);
-                            Rec.UpdateAgentServiceRateSalesHeader(recSAS);
+                            UpdateAgentServiceRateSalesHeader(recSAS);
                             // Message('Service %1', recSAS."SS Code");
                         end;
                     end;
@@ -215,9 +215,9 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
                     ApplicationArea = All;
                     CaptionML = ENU = 'Create Label', RUS = 'Создать бирку';
                     Image = PrintReport;
-                    Visible = (Rec."ShipStation Order ID" <> '')
-                                and (Rec."ShipStation Shipment ID" = '')
-                                and (Rec.Status = Rec.Status::Released);
+                    Visible = ("ShipStation Order ID" <> '')
+                                and ("ShipStation Shipment ID" = '')
+                                and (Status = Status::Released);
 
                     trigger OnAction()
                     var
@@ -239,7 +239,7 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
                     ApplicationArea = All;
                     CaptionML = ENU = 'Void Label', RUS = 'Отменить бирку';
                     Image = VoidCreditCard;
-                    Visible = (Rec."ShipStation Shipment ID" <> '') and (Rec."ShipStation Order ID" <> '');
+                    Visible = ("ShipStation Shipment ID" <> '') and ("ShipStation Order ID" <> '');
 
                     trigger OnAction()
                     var

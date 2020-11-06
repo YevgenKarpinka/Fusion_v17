@@ -5,7 +5,7 @@ pageextension 50024 "Location Ext." extends "Location Card"
         // Add changes to page layout here
         addafter("Pick According to FEFO")
         {
-            field("Create Move"; Rec."Create Move")
+            field("Create Move"; "Create Move")
             {
                 ApplicationArea = Warehouse;
 

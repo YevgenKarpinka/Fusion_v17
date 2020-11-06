@@ -5,7 +5,7 @@ pageextension 50009 "Item List Ext." extends "Item List"
         // Add changes to page layout here
         addafter(Type)
         {
-            field("Expiration Inventory"; Rec."Expiration Inventory")
+            field("Expiration Inventory"; "Expiration Inventory")
             {
                 ApplicationArea = All;
             }
@@ -42,15 +42,15 @@ pageextension 50009 "Item List Ext." extends "Item List"
                         if pageItemFilterByGroup.RunModal() = CloseAction::LookupCancel then exit;
                         FilterText := pageItemFilterByGroup.GetFilterItems(ParameterCount);
                         if FilterText = '' then begin
-                            Rec.FilterGroup(0);
-                            Rec.SetRange("No.");
+                            FilterGroup(0);
+                            SetRange("No.");
                             exit;
                         end;
 
                         if ParameterCount < codTypeHelper.GetMaxNumberOfParametersInSQLQuery - 100 then begin
-                            Rec.FilterGroup(0);
-                            Rec.MarkedOnly(false);
-                            Rec.SetFilter("No.", FilterText);
+                            FilterGroup(0);
+                            MarkedOnly(false);
+                            SetFilter("No.", FilterText);
                         end else begin
                             // RunOnTempRec := TRUE;
                             // ClearMarks();
@@ -67,8 +67,8 @@ pageextension 50009 "Item List Ext." extends "Item List"
                     trigger OnAction()
                     var
                     begin
-                        Rec.FilterGroup(0);
-                        Rec.SetRange("No.");
+                        FilterGroup(0);
+                        SetRange("No.");
                     end;
                 }
                 action(Send)

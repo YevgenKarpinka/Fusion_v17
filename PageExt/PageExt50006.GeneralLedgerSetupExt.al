@@ -9,12 +9,12 @@ pageextension 50006 "General Ledger Setup Ext." extends "General Ledger Setup"
             {
                 CaptionML = ENU = 'Bank Checks', RUS = 'Банковские Чеки';
 
-                field("Journal Template Name"; Rec."Journal Template Name")
+                field("Journal Template Name"; "Journal Template Name")
                 {
                     ApplicationArea = All;
                     // Importance = Additional;
                 }
-                field("Journal Batch Name"; Rec."Journal Batch Name")
+                field("Journal Batch Name"; "Journal Batch Name")
                 {
                     ApplicationArea = All;
                     // Importance = Additional;

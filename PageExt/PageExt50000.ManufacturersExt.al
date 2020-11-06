@@ -5,12 +5,12 @@ pageextension 50000 "Manufacturers Ext." extends Manufacturers
         // Add changes to page layout here
         addlast(Control1)
         {
-            field("Name RU"; Rec."Name RU")
+            field("Name RU"; "Name RU")
             {
                 ApplicationArea = All;
                 Importance = Additional;
             }
-            field(Address; Rec.Address)
+            field(Address; Address)
             {
                 ApplicationArea = All;
                 Importance = Additional;

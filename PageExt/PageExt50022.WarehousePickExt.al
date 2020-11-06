@@ -5,7 +5,7 @@ pageextension 50022 "Warehouse Pick Ext." extends "Warehouse Pick"
         // Add changes to page layout here
         addbefore("No.")
         {
-            field(CustomerName; ShipStationMgt.GetCustomerNameFromWhsePick(Rec."No."))
+            field(CustomerName; ShipStationMgt.GetCustomerNameFromWhsePick("No."))
             {
                 ApplicationArea = All;
                 CaptionML = ENU = 'Customer Name',

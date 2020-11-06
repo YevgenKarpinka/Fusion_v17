@@ -15,7 +15,7 @@ pageextension 50013 "Posted Sales Invoice Ext." extends "Posted Sales Invoice"
         }
         addafter(Closed)
         {
-            field("IC Document No."; Rec."IC Document No.")
+            field("IC Document No."; "IC Document No.")
             {
                 ApplicationArea = All;
                 Editable = false;

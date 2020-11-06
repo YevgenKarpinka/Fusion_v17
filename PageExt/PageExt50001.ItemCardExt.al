@@ -5,7 +5,7 @@ pageextension 50001 "Item Card Ext." extends "Item Card"
         // Add changes to page layout here
         addlast(Item)
         {
-            field("No. 2"; Rec."No. 2")
+            field("No. 2"; "No. 2")
             {
                 ApplicationArea = All;
                 Importance = Additional;
@@ -18,11 +18,11 @@ pageextension 50001 "Item Card Ext." extends "Item Card"
                 CaptionML = ENU = 'Item Descriptions';
                 Editable = EditAllowed;
 
-                field("Manufacturer Code"; Rec."Manufacturer Code")
+                field("Manufacturer Code"; "Manufacturer Code")
                 {
                     ApplicationArea = All;
                 }
-                field("Brand Code"; Rec."Brand Code")
+                field("Brand Code"; "Brand Code")
                 {
                     ApplicationArea = All;
                 }
@@ -484,11 +484,11 @@ pageextension 50001 "Item Card Ext." extends "Item Card"
                         ItemDescriptionModify;
                     end;
                 }
-                field("Baby Care"; Rec."Baby Care")
+                field("Baby Care"; "Baby Care")
                 {
                     ApplicationArea = All;
                 }
-                field("Web Item"; Rec."Web Item")
+                field("Web Item"; "Web Item")
                 {
                     ApplicationArea = All;
                 }
@@ -618,11 +618,11 @@ pageextension 50001 "Item Card Ext." extends "Item Card"
                         ItemDescriptionModify;
                     end;
                 }
-                field("Warning Qty"; Rec."Warning Qty")
+                field("Warning Qty"; "Warning Qty")
                 {
                     ApplicationArea = All;
                 }
-                field("Web Price"; Rec."Web Price")
+                field("Web Price"; "Web Price")
                 {
                     ApplicationArea = All;
                 }
@@ -645,7 +645,7 @@ pageextension 50001 "Item Card Ext." extends "Item Card"
                     _ItemFilterGroup: Record "Item Filter Group";
                     itemFilterGroupList: Page "Item Filter Group List";
                 begin
-                    _ItemFilterGroup.SetRange("Item No.", Rec."No.");
+                    _ItemFilterGroup.SetRange("Item No.", "No.");
                     // Page.RunModal(Page::"Item Filter Group List", _ItemFilterGroup);
                     itemFilterGroupList.SetInit(true);
                     itemFilterGroupList.SetTableView(_ItemFilterGroup);

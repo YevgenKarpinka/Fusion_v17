@@ -5,27 +5,27 @@ pageextension 50003 "Sales Order List Ext." extends "Sales Order List"
         // Add changes to page layout here
         addlast(Control1)
         {
-            field("ShipStation Status"; Rec."ShipStation Status")
+            field("ShipStation Status"; "ShipStation Status")
             {
                 ApplicationArea = All;
 
             }
-            field("ShipStation Order ID"; Rec."ShipStation Order ID")
+            field("ShipStation Order ID"; "ShipStation Order ID")
             {
                 ApplicationArea = All;
 
             }
-            field("ShipStation Shipment Amount"; Rec."ShipStation Shipment Amount")
+            field("ShipStation Shipment Amount"; "ShipStation Shipment Amount")
             {
                 ApplicationArea = All;
 
             }
-            field("ShipStation Shipment Cost"; Rec."ShipStation Shipment Cost")
+            field("ShipStation Shipment Cost"; "ShipStation Shipment Cost")
             {
                 ApplicationArea = All;
 
             }
-            field("ShipStation Insurance Cost"; Rec."ShipStation Insurance Cost")
+            field("ShipStation Insurance Cost"; "ShipStation Insurance Cost")
             {
                 ApplicationArea = All;
 

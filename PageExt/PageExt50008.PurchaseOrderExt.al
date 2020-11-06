@@ -5,7 +5,7 @@ pageextension 50008 "Purchase Order Ext." extends "Purchase Order"
         // Add changes to page layout here
         addafter(Status)
         {
-            field("IC Document No."; Rec."IC Document No.")
+            field("IC Document No."; "IC Document No.")
             {
                 ApplicationArea = All;
                 Editable = false;

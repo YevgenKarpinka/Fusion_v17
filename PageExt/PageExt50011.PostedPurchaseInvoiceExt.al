@@ -5,7 +5,7 @@ pageextension 50011 "Posted Purchase Invoice Ext." extends "Posted Purchase Invo
         // Add changes to page layout here
         addafter("Vendor Invoice No.")
         {
-            field("IC Document No."; Rec."IC Document No.")
+            field("IC Document No."; "IC Document No.")
             {
                 ApplicationArea = All;
                 Editable = false;
