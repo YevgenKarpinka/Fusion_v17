@@ -11,6 +11,29 @@ pageextension 50001 "Item Card Ext." extends "Item Card"
                 Importance = Additional;
             }
         }
+        addafter("VAT Bus. Posting Gr. (Price)")
+        {
+            field(LC; LC)
+            {
+                ApplicationArea = All;
+                Importance = Additional;
+            }
+            field(RS; RS)
+            {
+                ApplicationArea = All;
+                Importance = Additional;
+            }
+            field(MG; MG)
+            {
+                ApplicationArea = All;
+                Importance = Additional;
+            }
+            field(YR; YR)
+            {
+                ApplicationArea = All;
+                Importance = Additional;
+            }
+        }
         addafter(Warehouse)
         {
             group(groupItemDescription)

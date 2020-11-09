@@ -9,6 +9,22 @@ pageextension 50009 "Item List Ext." extends "Item List"
             {
                 ApplicationArea = All;
             }
+            field(LC; LC)
+            {
+                ApplicationArea = All;
+            }
+            field(RS; RS)
+            {
+                ApplicationArea = All;
+            }
+            field(MG; MG)
+            {
+                ApplicationArea = All;
+            }
+            field(YR; YR)
+            {
+                ApplicationArea = All;
+            }
         }
     }
 

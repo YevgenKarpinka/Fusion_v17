@@ -10,6 +10,25 @@ pageextension 50018 "Sales Order Subform Ext." extends "Sales Order Subform"
                 UpdateForm(true);
             end;
         }
+        addafter("Unit Price")
+        {
+            field(LC; GetItemLC())
+            {
+                ApplicationArea = All;
+            }
+            field(RS; GetItemRS())
+            {
+                ApplicationArea = All;
+            }
+            field(MG; GetItemMG())
+            {
+                ApplicationArea = All;
+            }
+            field(YR; GetItemYR())
+            {
+                ApplicationArea = All;
+            }
+        }
     }
 
     actions

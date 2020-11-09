@@ -29,7 +29,7 @@ tableextension 50001 "Item Ext." extends Item
         field(50002; "Expiration Inventory"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum ("Item Ledger Entry".Quantity where("Item No." = field("No."),
+            CalcFormula = Sum("Item Ledger Entry".Quantity where("Item No." = field("No."),
                                "Global Dimension 1 Code" = field("Global Dimension 1 Filter"),
                                "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
                                "Location Code" = field("Location Filter"),
@@ -76,6 +76,30 @@ tableextension 50001 "Item Ext." extends Item
         {
             DataClassification = CustomerContent;
             CaptionML = ENU = 'Web Price', RUS = 'Цена для Web';
+            DecimalPlaces = 0 : 2;
+        }
+        field(50010; LC; Decimal)
+        {
+            DataClassification = CustomerContent;
+            CaptionML = ENU = 'LC', RUS = 'LC';
+            DecimalPlaces = 0 : 2;
+        }
+        field(50011; RS; Decimal)
+        {
+            DataClassification = CustomerContent;
+            CaptionML = ENU = 'RS', RUS = 'RS';
+            DecimalPlaces = 0 : 2;
+        }
+        field(50012; MG; Decimal)
+        {
+            DataClassification = CustomerContent;
+            CaptionML = ENU = 'MG', RUS = 'MG';
+            DecimalPlaces = 0 : 2;
+        }
+        field(50013; YR; Decimal)
+        {
+            DataClassification = CustomerContent;
+            CaptionML = ENU = 'YR', RUS = 'YR';
             DecimalPlaces = 0 : 2;
         }
     }
