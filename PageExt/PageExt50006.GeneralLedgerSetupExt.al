@@ -21,5 +21,16 @@ pageextension 50006 "General Ledger Setup Ext." extends "General Ledger Setup"
                 }
             }
         }
+        addafter(Application)
+        {
+            group(eCommerce)
+            {
+                field("Transfer Items Job Queue Only"; "Transfer Items Job Queue Only")
+                {
+                    ApplicationArea = All;
+                    // Importance = Additional;
+                }
+            }
+        }
     }
 }

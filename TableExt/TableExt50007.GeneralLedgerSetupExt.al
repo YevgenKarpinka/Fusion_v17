@@ -15,5 +15,10 @@ tableextension 50007 "General Ledger Setup Ext." extends "General Ledger Setup"
             CaptionML = ENU = 'Journal Batch Name', RUS = 'Название раздела журнала';
             TableRelation = "Gen. Journal Batch".Name WHERE("Journal Template Name" = FIELD("Journal Template Name"));
         }
+        field(50002; "Transfer Items Job Queue Only"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            CaptionML = ENU = 'Transfer Items Job Queue Only', RUS = 'Перемещать товары только в очередь работ';
+        }
     }
 }

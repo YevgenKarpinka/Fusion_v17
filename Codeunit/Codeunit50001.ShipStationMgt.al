@@ -620,10 +620,14 @@ codeunit 50001 "ShipStation Mgt."
     local procedure jsonGetInventory(_ItemNo: Code[20]): Integer
     var
         _Item: Record Item;
+        ReservedQty: Decimal;
+        AvailQtyToHand: Decimal;
     begin
         if not _Item.Get(_ItemNo) then exit(0);
         _Item.CalcFields(Inventory);
-        case _Item.Inventory of
+        ReservedQty := CalReservedQty(_ItemNo);
+        AvailQtyToHand := _Item.Inventory + ReservedQty;
+        case AvailQtyToHand of
             0:
                 exit(0);
             else
@@ -634,13 +638,26 @@ codeunit 50001 "ShipStation Mgt."
         end;
     end;
 
+    local procedure CalReservedQty(ItemNo: Code[20]): Decimal
+    var
+        ReservEntry: Record "Reservation Entry";
+    begin
+        ReservEntry.SetCurrentKey("Item No.", "Reservation Status");
+        ReservEntry.SetRange("Item No.", ItemNo);
+        ReservEntry.SetRange("Reservation Status", ReservEntry."Reservation Status"::Reservation);
+        ReservEntry.SetRange(Positive, false);
+        ReservEntry.CalcSums("Quantity (Base)");
+        exit(ReservEntry."Quantity (Base)");
+    end;
+
     local procedure _GetItemPrice(_ItemNo: Code[20]): Decimal
     var
         _Item: Record Item;
     begin
         if not _Item.Get(_ItemNo) then exit(0);
 
-        exit(_Item."Unit Price");
+        // exit(_Item."Unit Price");
+        exit(_Item."Web Price");
     end;
 
     local procedure jsonGetName(_ItemNo: Code[20]): JsonObject

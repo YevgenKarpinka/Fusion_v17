@@ -168,17 +168,18 @@ pageextension 50009 "Item List Ext." extends "Item List"
                         Counter: Integer;
                         msgClearTransferFlag: TextConst ENU = 'Clear Transfer Flag?', RUS = 'Очистить признак передачи?';
                         responseText: Text;
+                        TransferItems: Codeunit "Transfer Items To Site Mgt";
                     begin
-                        if GuiAllowed then begin
-                            _Item.SetCurrentKey("Transfered to eShop");
-                            _Item.SetRange("Transfered to eShop", true);
-                            if _Item.FindFirst() then
-                                if Confirm(msgClearTransferFlag, false) then begin
-                                    _Item.SetRange("Transfered to eShop", true);
-                                    _Item.ModifyAll("Transfered to eShop", false);
-                                end;
-                            _Item.SetRange("Transfered to eShop", false);
-                        end;
+                        TransferItems.Run();
+                        exit;
+
+                        _Item.SetCurrentKey("Transfered to eShop");
+                        if _Item.FindFirst() then
+                            if Confirm(msgClearTransferFlag, false) then begin
+                                _Item.SetRange("Transfered to eShop", true);
+                                _Item.ModifyAll("Transfered to eShop", false);
+                            end;
+                        _Item.SetRange("Transfered to eShop", false);
 
                         Counter := 0;
 
