@@ -12,8 +12,8 @@ codeunit 50012 "Transfer Items To Site Mgt"
 
     local procedure TransferItemsToSite()
     var
-        _Item: Record Item;
-        _ItemModify: Record Item;
+        // _Item: Record Item;
+        // _ItemModify: Record Item;
         ShipStationMgt: Codeunit "ShipStation Mgt.";
         _jsonItemList: JsonArray;
         _jsonErrorItemList: JsonArray;
@@ -23,19 +23,21 @@ codeunit 50012 "Transfer Items To Site Mgt"
         TotalCount: Integer;
         Counter: Integer;
         responseText: Text;
+        ItemTransferList: Record "Item Transfer Site";
     begin
-        _Item.SetCurrentKey("Web Item", "Transfered to eShop");
-        _Item.SetRange("Web Item", true);
-        GetGLSetup();
-        if GLSetup."Transfer Items Job Queue Only" then
-            _Item.SetRange("Transfered to eShop", false);
+        // _Item.SetCurrentKey("Web Item", "Transfered to eShop");
+        // _Item.SetRange("Web Item", true);
+        // GetGLSetup();
+        // if GLSetup."Transfer Items Job Queue Only" then
+        //     _Item.SetRange("Transfered to eShop", false);
 
+        ItemTransferList.Reset();
         Counter := 0;
-        TotalCount := _Item.Count;
+        TotalCount := ItemTransferList.Count;
 
-        if _Item.FindSet(false, false) then
+        if ItemTransferList.FindSet(false, false) then
             repeat
-                _jsonItem := ShipStationMgt.CreateJsonItemForWooComerse(_Item."No.");
+                _jsonItem := ShipStationMgt.CreateJsonItemForWooComerse(ItemTransferList."Item No.");
                 Counter += 1;
 
                 if _jsonItem.Get('SKU', _jsonToken) then begin
@@ -54,22 +56,26 @@ codeunit 50012 "Transfer Items To Site Mgt"
                         Clear(_jsonItemList);
                         Commit();
                     end;
-                    _ItemModify.Get(_Item."No.");
-                    _ItemModify."Transfered to eShop" := true;
-                    _ItemModify.Modify();
+                    DeleteItemForTransferToSite(ItemTransferList."Item No.");
+                    // _ItemModify.Get(_Item."No.");
+                    // _ItemModify."Transfered to eShop" := true;
+                    // _ItemModify.Modify();
                 end;
-            until _Item.Next() = 0;
-        if _jsonErrorItemList.Count > 0 then begin
+            until ItemTransferList.Next() = 0;
+        GetGLSetup();
+        if (_jsonErrorItemList.Count > 0)
+        and GLSetup."Save Error To File" then begin
             _jsonErrorItemList.WriteTo(_jsonText);
             CaptionMgt.SaveStreamToFile(_jsonText, 'errorItemList.txt');
         end;
 
-        if not GLSetup."Transfer Items Job Queue Only" then begin
-            _Item.Reset();
-            _Item.SetCurrentKey("Transfered to eShop");
-            _Item.SetRange("Transfered to eShop", true);
-            _Item.ModifyAll("Transfered to eShop", false);
-        end;
+
+        // if not GLSetup."Transfer Items Job Queue Only" then begin
+        // _Item.Reset();
+        // _Item.SetCurrentKey("Transfered to eShop");
+        // _Item.SetRange("Transfered to eShop", true);
+        // _Item.ModifyAll("Transfered to eShop", false);
+        // end;
     end;
 
     local procedure MarkItemToTransfer(ItemNoFilter: Text)
@@ -84,6 +90,43 @@ codeunit 50012 "Transfer Items To Site Mgt"
                     ItemModify.Modify();
                 end;
             until ItemModify.Next() = 0;
+    end;
+
+    procedure AddAllItemsForTransferToSite()
+    var
+        ItemForTransfer: Record Item;
+    begin
+        ItemForTransfer.SetCurrentKey("Web Item");
+        ItemForTransfer.SetRange("Web Item", true);
+        if ItemForTransfer.FindSet(false, false) then
+            repeat
+                AddItemForTransferToSite(ItemForTransfer."No.");
+            until ItemForTransfer.Next() = 0;
+    end;
+
+    procedure AddItemForTransferToSite(ItemNoFilter: Text)
+    var
+        ItemForTransfer: Record Item;
+        ItemTransferList: Record "Item Transfer Site";
+    begin
+        ItemForTransfer.SetFilter("No.", ItemNoFilter);
+        if ItemForTransfer.FindSet(false, true) then
+            repeat
+                if ItemForTransfer."Web Item" then
+                    if not ItemTransferList.Get(ItemForTransfer."No.") then begin
+                        ItemTransferList.Init();
+                        ItemTransferList."Item No." := ItemForTransfer."No.";
+                        ItemTransferList.Insert();
+                    end;
+            until ItemForTransfer.Next() = 0;
+    end;
+
+    local procedure DeleteItemForTransferToSite(ItemNoFilter: Text)
+    var
+        ItemTransferList: Record "Item Transfer Site";
+    begin
+        ItemTransferList.SetFilter("Item No.", ItemNoFilter);
+        ItemTransferList.DeleteAll();
     end;
 
     local procedure GetGLSetup();
@@ -112,7 +155,8 @@ codeunit 50012 "Transfer Items To Site Mgt"
             if not GLSetup."Transfer Items Job Queue Only" then
                 OnTransferItemToSite(ItemNoFilter)
             else
-                MarkItemToTransfer(ItemNoFilter);
+                // MarkItemToTransfer(ItemNoFilter);
+                AddItemForTransferToSite(ItemNoFilter);
         end;
     end;
 
@@ -137,7 +181,8 @@ codeunit 50012 "Transfer Items To Site Mgt"
             if not GLSetup."Transfer Items Job Queue Only" then
                 OnTransferItemToSite(ItemNoFilter)
             else
-                MarkItemToTransfer(ItemNoFilter);
+                // MarkItemToTransfer(ItemNoFilter);
+                AddItemForTransferToSite(ItemNoFilter);
         end;
     end;
 
@@ -148,12 +193,13 @@ codeunit 50012 "Transfer Items To Site Mgt"
         ReservationEntry: Record "Reservation Entry";
     begin
         if ReservationEntry.Get(EntrySummary."Entry No.") then
-            if ReservationEntry."Reservation Status" = ReservationEntry."Reservation Status"::Reservation then begin
+            if (ReservationEntry."Reservation Status" = ReservationEntry."Reservation Status"::Reservation) then begin
                 GetGLSetup();
                 if not GLSetup."Transfer Items Job Queue Only" then
                     OnTransferItemToSite(ReservationEntry."Item No.")
                 else
-                    MarkItemToTransfer(ReservationEntry."Item No.");
+                    // MarkItemToTransfer(ReservationEntry."Item No.");
+                    AddItemForTransferToSite(ReservationEntry."Item No.");
             end;
     end;
 
@@ -166,7 +212,8 @@ codeunit 50012 "Transfer Items To Site Mgt"
             if not GLSetup."Transfer Items Job Queue Only" then
                 OnTransferItemToSite(ReservationEntry."Item No.")
             else
-                MarkItemToTransfer(ReservationEntry."Item No.");
+                // MarkItemToTransfer(ReservationEntry."Item No.");
+                AddItemForTransferToSite(ReservationEntry."Item No.");
         end;
     end;
 
@@ -174,12 +221,13 @@ codeunit 50012 "Transfer Items To Site Mgt"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Reservation Management", 'OnBeforeDeleteReservEntries', '', false, false)]
     local procedure OnTransferItemToSiteBeforeDeleteReserve(var ReservationEntry: Record "Reservation Entry")
     begin
-        if ReservationEntry."Reservation Status" = ReservationEntry."Reservation Status"::Reservation then begin
+        if (ReservationEntry."Reservation Status" = ReservationEntry."Reservation Status"::Reservation) then begin
             GetGLSetup();
             if not GLSetup."Transfer Items Job Queue Only" then
                 OnTransferItemToSite(ReservationEntry."Item No.")
             else
-                MarkItemToTransfer(ReservationEntry."Item No.");
+                // MarkItemToTransfer(ReservationEntry."Item No.");
+                AddItemForTransferToSite(ReservationEntry."Item No.");
         end;
     end;
 
@@ -226,7 +274,9 @@ codeunit 50012 "Transfer Items To Site Mgt"
                 end;
             until _Item.Next() = 0;
 
-        if _jsonErrorItemList.Count > 0 then begin
+        GetGLSetup();
+        if (_jsonErrorItemList.Count > 0)
+        and GLSetup."Save Error To File" then begin
             _jsonErrorItemList.WriteTo(_jsonText);
             CaptionMgt.SaveStreamToFile(_jsonText, 'errorItemList.txt');
         end;

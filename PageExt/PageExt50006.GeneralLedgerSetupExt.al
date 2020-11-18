@@ -30,6 +30,11 @@ pageextension 50006 "General Ledger Setup Ext." extends "General Ledger Setup"
                     ApplicationArea = All;
                     // Importance = Additional;
                 }
+                field("Save Error To File"; "Save Error To File")
+                {
+                    ApplicationArea = All;
+                    // Importance = Additional;
+                }
             }
         }
     }

@@ -113,6 +113,12 @@ pageextension 50009 "Item List Ext." extends "Item List"
                         _Item.SetCurrentKey("Web Item");
                         _Item.SetRange("Web Item", true);
 
+                        if _Item.FindSet(false, false) then
+                            repeat
+                                TransferItems.AddItemForTransferToSite(_Item."No.");
+                            until _Item.Next() = 0;
+                        exit;
+
                         TotalCount := _Item.Count;
                         ConfigProgressBarRecord.Init(TotalCount, Counter, STRSUBSTNO(ApplyingURLMsg, _Item.TableCaption));
 
@@ -168,9 +174,9 @@ pageextension 50009 "Item List Ext." extends "Item List"
                         Counter: Integer;
                         msgClearTransferFlag: TextConst ENU = 'Clear Transfer Flag?', RUS = 'Очистить признак передачи?';
                         responseText: Text;
-                        TransferItems: Codeunit "Transfer Items To Site Mgt";
+
                     begin
-                        TransferItems.Run();
+                        TransferItems.AddAllItemsForTransferToSite();
                         exit;
 
                         _Item.SetCurrentKey("Transfered to eShop");
@@ -323,4 +329,5 @@ pageextension 50009 "Item List Ext." extends "Item List"
         ConfigProgressBarRecord: Codeunit "Config Progress Bar";
         CaptionMgt: Codeunit "Caption Mgt.";
         IsSuccessStatusCode: Boolean;
+        TransferItems: Codeunit "Transfer Items To Site Mgt";
 }
