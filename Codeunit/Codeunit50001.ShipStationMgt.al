@@ -627,6 +627,8 @@ codeunit 50001 "ShipStation Mgt."
         _Item.CalcFields(Inventory);
         ReservedQty := CalReservedQty(_ItemNo);
         AvailQtyToHand := _Item.Inventory + ReservedQty;
+
+        if AvailQtyToHand < 0 then AvailQtyToHand := 0;
         case AvailQtyToHand of
             0:
                 exit(0);
