@@ -633,7 +633,7 @@ codeunit 50001 "ShipStation Mgt."
             0:
                 exit(0);
             else
-                if _Item.Inventory > _Item."Warning Qty" then
+                if AvailQtyToHand > _Item."Warning Qty" then
                     exit(1)
                 else
                     exit(2);
