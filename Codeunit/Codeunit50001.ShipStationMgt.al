@@ -389,12 +389,12 @@ codeunit 50001 "ShipStation Mgt."
         _jsonObject.Add('itemId', _Item.SystemId);
         _jsonObject.Add('SKU', _Item."No.");
         _jsonObject.Add('name', jsonGetName(_Item."No."));
-        _jsonObject.Add('price_regular', _Item."Unit Price");
-        // _SalesPrice := Round(_GetItemPrice(_Item."No."), 0.01);
-        _jsonObject.Add('price_sale', _Item."Web Price");
-        if _Item."Web Price" < _Item."Unit Price" then begin
-            _jsonObject.Add('discount_value', _Item."Web Price" * 100 / _Item."Unit Price");
+        _jsonObject.Add('price_regular', _Item."Web Price");
+        if _Item."Web Price" > 0 then begin
+            _jsonObject.Add('price_sale', _Item."Unit Price");
+            _jsonObject.Add('discount_value', _Item."Unit Price" * 100 / _Item."Web Price");
         end else begin
+            _jsonObject.Add('price_sale', 0);
             _jsonObject.Add('discount_value', 0);
         end;
         _jsonObject.Add('available', jsonGetInventory(_Item."No."));

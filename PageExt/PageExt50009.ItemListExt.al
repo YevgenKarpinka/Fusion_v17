@@ -116,6 +116,7 @@ pageextension 50009 "Item List Ext." extends "Item List"
                         if _Item.FindSet(false, false) then
                             repeat
                                 TransferItems.AddItemForTransferToSite(_Item."No.");
+                                Message(msgSentOk);
                             until _Item.Next() = 0;
                         exit;
 
