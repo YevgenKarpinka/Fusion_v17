@@ -398,6 +398,7 @@ codeunit 50001 "ShipStation Mgt."
             _jsonObject.Add('discount_value', 0);
         end;
         _jsonObject.Add('available', jsonGetInventory(_Item."No."));
+        _jsonObject.Add('quantity', jsonGetQuantity(_Item."No."));
         _jsonObject.Add('category', jsonGetCategory(_Item."Item Category Code", 0));
         _jsonObject.Add('subcategory', jsonGetCategory(_Item."Item Category Code", 1));
         _jsonObject.Add('subsubcategory', jsonGetCategory(_Item."Item Category Code", 2));
@@ -637,6 +638,19 @@ codeunit 50001 "ShipStation Mgt."
                 else
                     exit(2);
         end;
+    end;
+
+    local procedure jsonGetQuantity(_ItemNo: Code[20]): Decimal
+    var
+        _Item: Record Item;
+        ReservedQty: Decimal;
+        AvailQtyToHand: Decimal;
+    begin
+        if not _Item.Get(_ItemNo) then exit(0);
+        _Item.CalcFields(Inventory);
+        ReservedQty := CalReservedQty(_ItemNo);
+        AvailQtyToHand := _Item.Inventory + ReservedQty;
+        exit(AvailQtyToHand);
     end;
 
     local procedure CalReservedQty(ItemNo: Code[20]): Decimal

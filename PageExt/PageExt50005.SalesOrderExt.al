@@ -134,7 +134,7 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
                     _SalesHeader: Record "Sales Header";
                 begin
                     _SalesHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(_SalesHeader);
+                    CurrPage.SetSelectionFilter(_SalesHeader);
                     Report.Run(Report::"Sales Order Fusion", true, true, _SalesHeader);
                 end;
             }
