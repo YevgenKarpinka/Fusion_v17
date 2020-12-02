@@ -164,7 +164,7 @@ report 50004 "Create Pick Available"
                         ApplicationArea = Warehouse;
                         Caption = 'Sorting Method for Pick Lines';
                         MultiLine = true;
-                        OptionCaption = ' ,Item,Document,Shelf/Bin No.,Due Date,Destination,Bin Ranking,Action Type';
+                        // OptionCaption = ' ,Item,Document,Shelf/Bin No.,Due Date,Destination,Bin Ranking,Action Type';
                         ToolTip = 'Specifies that you want to select from the available options to sort lines in the created pick document.';
                     }
                     field(BreakbulkFilter; BreakbulkFilter)
@@ -224,7 +224,8 @@ report 50004 "Create Pick Available"
         MaxNoOfLines: Integer;
         MaxNoOfSourceDoc: Integer;
         TempNo: Integer;
-        SortPick: Option " ",Item,Document,"Shelf No.","Due Date",Destination,"Bin Ranking","Action Type";
+        SortPick: Enum "Whse. Activity Sorting Method";
+        // SortPick: Option " ",Item,Document,"Shelf No.","Due Date",Destination,"Bin Ranking","Action Type";
         PerDestination: Boolean;
         PerItem: Boolean;
         PerZone: Boolean;
@@ -301,9 +302,9 @@ report 50004 "Create Pick Available"
                 Cust.Get(PickWhseWkshLine."Destination No.");
                 case PickWhseWkshLine."Source Document" of
                     PickWhseWkshLine."Source Document"::"Sales Order":
-                        Cust.CheckBlockedCustOnDocs(Cust, DummySalesHeader."Document Type"::Order.AsInteger(), false, false);
+                        Cust.CheckBlockedCustOnDocs(Cust, DummySalesHeader."Document Type"::Order, false, false);
                     PickWhseWkshLine."Source Document"::"Sales Return Order":
-                        Cust.CheckBlockedCustOnDocs(Cust, DummySalesHeader."Document Type"::"Return Order".AsInteger(), false, false);
+                        Cust.CheckBlockedCustOnDocs(Cust, DummySalesHeader."Document Type"::"Return Order", false, false);
                 end;
             end;
 
@@ -349,7 +350,7 @@ report 50004 "Create Pick Available"
         PickWhseActivHeader.SetRange("No.", FirstSetPickNo, LastPickNo);
         PickWhseActivHeader.Find('-');
         repeat
-            if SortPick > 0 then
+            if SortPick.AsInteger() > 0 then
                 PickWhseActivHeader.SortWhseDoc;
             Commit();
             if PrintPick then begin
@@ -383,7 +384,7 @@ report 50004 "Create Pick Available"
         exit(ReturnValue);
     end;
 
-    procedure InitializeReport(AssignedID2: Code[50]; MaxNoOfLines2: Integer; MaxNoOfSourceDoc2: Integer; SortPick2: Option " ",Item,Document,"Shelf/Bin No.","Due Date","Ship-To","Bin Ranking","Action Type"; PerDestination2: Boolean; PerItem2: Boolean; PerZone2: Boolean; PerBin2: Boolean; PerWhseDoc2: Boolean; PerDate2: Boolean; PrintPick2: Boolean; DoNotFillQtytoHandle2: Boolean; BreakbulkFilter2: Boolean)
+    procedure InitializeReport(AssignedID2: Code[50]; MaxNoOfLines2: Integer; MaxNoOfSourceDoc2: Integer; SortPick2: Enum "Whse. Activity Sorting Method"; PerDestination2: Boolean; PerItem2: Boolean; PerZone2: Boolean; PerBin2: Boolean; PerWhseDoc2: Boolean; PerDate2: Boolean; PrintPick2: Boolean; DoNotFillQtytoHandle2: Boolean; BreakbulkFilter2: Boolean)
     begin
         AssignedID := AssignedID2;
         MaxNoOfLines := MaxNoOfLines2;

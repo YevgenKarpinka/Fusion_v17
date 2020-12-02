@@ -171,7 +171,7 @@ report 50005 "Whse.-Shpt Create Pick Avail"
                         ApplicationArea = Warehouse;
                         Caption = 'Sorting Method for Activity Lines';
                         MultiLine = true;
-                        OptionCaption = ' ,Item,Document,Shelf or Bin,Due Date,Destination,Bin Ranking,Action Type';
+                        // OptionCaption = ' ,Item,Document,Shelf or Bin,Due Date,Destination,Bin Ranking,Action Type';
                         ToolTip = 'Specifies the method by which the lines in the instruction will be sorted. The options are by item, document, shelf or bin (if the location uses bins, this functions as the bin code), due date, bin ranking, or action type.';
                     }
                     field(BreakbulkFilter; BreakbulkFilter)
@@ -228,7 +228,7 @@ report 50005 "Whse.-Shpt Create Pick Avail"
         OnBeforeSortWhseActivHeaders(WhseActivHeader, FirstActivityNo, LastActivityNo, HideNothingToHandleErr);
         if WhseActivHeader.Find('-') then begin
             repeat
-                if SortActivity > 0 then
+                if SortActivity.AsInteger() > 0 then
                     WhseActivHeader.SortWhseDoc;
             until WhseActivHeader.Next = 0;
 
@@ -261,7 +261,8 @@ report 50005 "Whse.-Shpt Create Pick Avail"
         FirstActivityNo: Code[20];
         LastActivityNo: Code[20];
         AssignedID: Code[50];
-        SortActivity: Option " ",Item,Document,"Shelf or Bin","Due Date",Destination,"Bin Ranking","Action Type";
+        SortActivity: Enum "Whse. Activity Sorting Method";
+        // SortActivity: Option " ",Item,Document,"Shelf or Bin","Due Date",Destination,"Bin Ranking","Action Type";
         PrintDoc: Boolean;
         EverythingHandled: Boolean;
         WhseWkshLineFound: Boolean;
@@ -338,7 +339,7 @@ report 50005 "Whse.-Shpt Create Pick Avail"
         end;
     end;
 
-    procedure Initialize(AssignedID2: Code[50]; SortActivity2: Option " ",Item,Document,"Shelf/Bin No.","Due Date","Ship-To","Bin Ranking","Action Type"; PrintDoc2: Boolean; DoNotFillQtytoHandle2: Boolean; BreakbulkFilter2: Boolean)
+    procedure Initialize(AssignedID2: Code[50]; SortActivity2: Enum "Whse. Activity Sorting Method"; PrintDoc2: Boolean; DoNotFillQtytoHandle2: Boolean; BreakbulkFilter2: Boolean)
     begin
         AssignedID := AssignedID2;
         SortActivity := SortActivity2;

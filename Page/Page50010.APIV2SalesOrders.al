@@ -107,23 +107,23 @@ page 50010 "APIV2 - Sales Orders"
                         Customer: Record "Customer";
                         GraphIntContact: Codeunit "Graph Int. - Contact";
                     begin
-                        RegisterFieldSet(Rec.FIELDNO("Contact Graph Id"));
+                        RegisterFieldSet(FieldNo("Contact Graph Id"));
 
-                        IF Rec."Contact Graph Id" = '' THEN
-                            ERROR(SellToContactIdHasToHaveValueErr);
+                        if "Contact Graph Id" = '' then
+                            Error(ContactIdHasToHaveValueErr);
 
-                        IF NOT GraphIntContact.FindOrCreateCustomerFromGraphContactSafe(Rec."Contact Graph Id", Customer, Contact) THEN
-                            EXIT;
+                        if not GraphIntContact.FindOrCreateCustomerFromGraphContactSafe("Contact Graph Id", Customer, Contact) then
+                            exit;
 
-                        UpdateSellToCustomerFromSellToGraphContactId(Customer);
+                        UpdateCustomerFromGraphContactId(Customer);
 
-                        IF Contact."Company No." = Customer."No." THEN BEGIN
-                            Rec.VALIDATE("Sell-To Contact No.", Contact."No.");
-                            Rec.VALIDATE("Sell-to Contact", Contact.Name);
+                        if Contact."Company No." = Customer."No." then begin
+                            Validate("Sell-To Contact No.", Contact."No.");
+                            Validate("Sell-to Contact", Contact.Name);
 
-                            RegisterFieldSet(Rec.FIELDNO("Sell-To Contact No."));
-                            RegisterFieldSet(Rec.FIELDNO("Sell-to Contact"));
-                        END;
+                            RegisterFieldSet(FieldNo("Sell-To Contact No."));
+                            RegisterFieldSet(FieldNo("Sell-to Contact"));
+                        end;
                     end;
                 }
                 field(customerNumber; Rec."Sell-to Customer No.")
@@ -584,7 +584,7 @@ page 50010 "APIV2 - Sales Orders"
         CouldNotFindSellToCustomerErr: Label 'The sell-to customer cannot be found.', Locked = true;
         CouldNotFindBillToCustomerErr: Label 'The bill-to customer cannot be found.', Locked = true;
         PartialShipping: Boolean;
-        SellToContactIdHasToHaveValueErr: Label 'Sell-to contact Id must have a value set.', Locked = true;
+        ContactIdHasToHaveValueErr: Label 'Contact Id must have a value set.', Locked = true;
         SalesOrderPermissionsErr: Label 'You do not have permissions to read Sales Orders.';
         CurrencyValuesDontMatchErr: Label 'The currency values do not match to a specific Currency.', Locked = true;
         CurrencyIdDoesNotMatchACurrencyErr: Label 'The "currencyId" does not match to a Currency.', Locked = true;
@@ -766,25 +766,25 @@ page 50010 "APIV2 - Sales Orders"
         RegisterFieldSet(Rec.FIELDNO("Shipping Advice"));
     end;
 
-    local procedure UpdateSellToCustomerFromSellToGraphContactId(var Customer: Record Customer)
+    local procedure UpdateCustomerFromGraphContactId(var Customer: Record Customer)
     var
         O365SalesInvoiceMgmt: Codeunit "O365 Sales Invoice Mgmt";
         UpdateCustomer: Boolean;
     begin
-        UpdateCustomer := Rec."Sell-to Customer No." = '';
-        IF NOT UpdateCustomer THEN BEGIN
-            TempFieldBuffer.RESET();
-            TempFieldBuffer.SETRANGE("Field ID", Rec.FIELDNO("Customer Id"));
-            UpdateCustomer := NOT TempFieldBuffer.FINDFIRST();
-            TempFieldBuffer.RESET();
-        END;
+        UpdateCustomer := "Sell-to Customer No." = '';
+        if not UpdateCustomer then begin
+            TempFieldBuffer.Reset();
+            TempFieldBuffer.SetRange("Field ID", FieldNo("Customer Id"));
+            UpdateCustomer := not TempFieldBuffer.FindFirst;
+            TempFieldBuffer.Reset();
+        end;
 
-        IF UpdateCustomer THEN BEGIN
-            Rec.VALIDATE("Customer Id", Customer.SystemId);
-            Rec.VALIDATE("Sell-to Customer No.", Customer."No.");
-            RegisterFieldSet(Rec.FIELDNO("Customer Id"));
-            RegisterFieldSet(Rec.FIELDNO("Sell-to Customer No."));
-        END;
+        if UpdateCustomer then begin
+            Validate("Customer Id", Customer.SystemId);
+            Validate("Sell-to Customer No.", Customer."No.");
+            RegisterFieldSet(FieldNo("Customer Id"));
+            RegisterFieldSet(FieldNo("Sell-to Customer No."));
+        end;
 
         O365SalesInvoiceMgmt.EnforceCustomerTemplateIntegrity(Customer);
     end;

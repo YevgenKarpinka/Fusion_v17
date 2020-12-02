@@ -461,18 +461,14 @@ page 50007 "APIV2 - Customers"
     var
         ConfigTemplateHeader: Record "Config. Template Header";
         ConfigTmplSelectionRules: Record "Config. Tmpl. Selection Rules";
-        IntegrationManagement: Codeunit "Integration Management";
         ConfigTemplateManagement: Codeunit "Config. Template Management";
         UpdatedRecRef: RecordRef;
     begin
-        // if not ConfigTmplSelectionRules.FindTemplateBasedOnRecordFields(InsertedRecordRef, ConfigTemplateHeader) then
         if not FindTemplateBasedOnRecordFields(InsertedRecordRef, ConfigTemplateHeader) then
             exit;
 
         if ConfigTemplateManagement.ApplyTemplate(InsertedRecordRef, TempFieldSet, UpdatedRecRef, ConfigTemplateHeader) then
             InsertedRecordRef := UpdatedRecRef.Duplicate;
-
-        IntegrationManagement.InsertUpdateIntegrationRecord(InsertedRecordRef, ModifiedDateTime);
     end;
 
     local procedure FindTemplateBasedOnRecordFields(RecordVariant: Variant; var ConfigTemplateHeader: Record "Config. Template Header"): Boolean
