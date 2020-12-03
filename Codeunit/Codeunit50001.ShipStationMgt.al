@@ -379,6 +379,8 @@ codeunit 50001 "ShipStation Mgt."
     procedure CreateJsonItemForWooComerse(ItemNo: Code[20]): JsonObject
     var
         _Item: Record Item;
+        ItemIC: Record Item;
+        ICPartner: Record "IC Partner";
         _ItemDescription: Record "Item Description";
         _jsonText: Text;
         _jsonObject: JsonObject;
@@ -386,7 +388,13 @@ codeunit 50001 "ShipStation Mgt."
     begin
         if (ItemNo = '') or not _Item.Get(ItemNo) or not _ItemDescription.Get(ItemNo) then exit(_jsonObject);
 
-        _jsonObject.Add('itemId', _Item.SystemId);
+        // get item systemId from IC
+        ICPartner.SetRange(Code, 'GLICKSHOP');
+        ICPartner.FindFirst();
+        ItemIC.ChangeCompany(ICPartner."Inbox Details");
+        ItemIC.Get(ItemNo);
+        _jsonObject.Add('itemId', ItemIC.SystemId);
+
         _jsonObject.Add('SKU', _Item."No.");
         _jsonObject.Add('name', jsonGetName(_Item."No."));
         _jsonObject.Add('price_regular', _Item."Web Price");
@@ -650,6 +658,7 @@ codeunit 50001 "ShipStation Mgt."
         _Item.CalcFields(Inventory);
         ReservedQty := CalReservedQty(_ItemNo);
         AvailQtyToHand := _Item.Inventory + ReservedQty;
+        if AvailQtyToHand < 0 then AvailQtyToHand := 0;
         exit(AvailQtyToHand);
     end;
 

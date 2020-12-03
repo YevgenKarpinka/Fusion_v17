@@ -5,6 +5,10 @@ pageextension 50009 "Item List Ext." extends "Item List"
         // Add changes to page layout here
         addafter(Type)
         {
+            // field(Id; Id)
+            // {
+            //     ApplicationArea = All;
+            // }
             field("Expiration Inventory"; "Expiration Inventory")
             {
                 ApplicationArea = All;
@@ -178,6 +182,7 @@ pageextension 50009 "Item List Ext." extends "Item List"
 
                     begin
                         TransferItems.AddAllItemsForTransferToSite();
+                        Message(msgSentOk);
                         exit;
 
                         _Item.SetCurrentKey("Transfered to eShop");
