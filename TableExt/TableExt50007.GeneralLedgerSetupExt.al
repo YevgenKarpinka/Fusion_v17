@@ -25,5 +25,10 @@ tableextension 50007 "General Ledger Setup Ext." extends "General Ledger Setup"
             DataClassification = CustomerContent;
             CaptionML = ENU = 'Save Error To File', RUS = 'Сохранять ошибки в файл';
         }
+        field(50004; "Transfer Items Allowed"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            CaptionML = ENU = 'Transfer Items Allowed', RUS = 'Перемещать товары разрешено';
+        }
     }
 }

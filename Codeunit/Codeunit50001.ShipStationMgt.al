@@ -376,6 +376,11 @@ codeunit 50001 "ShipStation Mgt."
         UpdateSalesHeaderFromShipStation(DocNo, JSObjectHeader);
     end;
 
+    local procedure GetGLSetup();
+    begin
+        GLSetup.Get;
+    end;
+
     procedure CreateJsonItemForWooComerse(ItemNo: Code[20]): JsonObject
     var
         _Item: Record Item;
@@ -386,6 +391,9 @@ codeunit 50001 "ShipStation Mgt."
         _jsonObject: JsonObject;
         _SalesPrice: Decimal;
     begin
+        GetGLSetup();
+        if not GLSetup."Transfer Items Allowed" then exit;
+
         if (ItemNo = '') or not _Item.Get(ItemNo) or not _ItemDescription.Get(ItemNo) then exit(_jsonObject);
 
         // get item systemId from IC
@@ -1587,6 +1595,7 @@ codeunit 50001 "ShipStation Mgt."
     end;
 
     var
+        GLSetup: Record "General Ledger Setup";
         ICExtended: codeunit "IC Extended";
         glShipStationSetup: Record "ShipStation Setup";
         testMode: Boolean;

@@ -36,6 +36,47 @@ pageextension 50003 "Sales Order List Ext." extends "Sales Order List"
     actions
     {
         // Add changes to page actions here
+        addbefore(Release)
+        {
+            action("Bulk Release")
+            {
+                ApplicationArea = All;
+                Image = ReleaseDoc;
+                CaptionML = ENU = 'Bulk Release', RUS = 'Массовый выпуск';
+
+                trigger OnAction()
+                var
+                    _SalesHeader: Record "Sales Header";
+                    ReleaseSalesDoc: Codeunit "Release Sales Document";
+                begin
+                    _SalesHeader := Rec;
+                    CurrPage.SETSELECTIONFILTER(_SalesHeader);
+                    if _SalesHeader.FindSet(false, false) then
+                        repeat
+                            ReleaseSalesDoc.PerformManualRelease(_SalesHeader);
+                        until _SalesHeader.Next() = 0;
+                end;
+            }
+            action("Bulk ReOpen")
+            {
+                ApplicationArea = All;
+                Image = ReOpen;
+                CaptionML = ENU = 'Bulk ReOpen', RUS = 'Массовое открытие';
+
+                trigger OnAction()
+                var
+                    _SalesHeader: Record "Sales Header";
+                    ReleaseSalesDoc: Codeunit "Release Sales Document";
+                begin
+                    _SalesHeader := Rec;
+                    CurrPage.SETSELECTIONFILTER(_SalesHeader);
+                    if _SalesHeader.FindSet(false, false) then
+                        repeat
+                            ReleaseSalesDoc.PerformManualReopen(_SalesHeader);
+                        until _SalesHeader.Next() = 0;
+                end;
+            }
+        }
         addafter("Work Order")
         {
             action("Sales Order Fusion")

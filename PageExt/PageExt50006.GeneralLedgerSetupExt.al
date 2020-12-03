@@ -25,6 +25,11 @@ pageextension 50006 "General Ledger Setup Ext." extends "General Ledger Setup"
         {
             group(eCommerce)
             {
+                field("Transfer Items Allowed"; "Transfer Items Allowed")
+                {
+                    ApplicationArea = All;
+                    // Importance = Additional;
+                }
                 field("Transfer Items Job Queue Only"; "Transfer Items Job Queue Only")
                 {
                     ApplicationArea = All;

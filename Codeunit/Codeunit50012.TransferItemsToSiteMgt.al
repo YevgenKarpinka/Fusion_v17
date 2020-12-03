@@ -12,8 +12,6 @@ codeunit 50012 "Transfer Items To Site Mgt"
 
     local procedure TransferItemsToSite()
     var
-        // _Item: Record Item;
-        // _ItemModify: Record Item;
         ShipStationMgt: Codeunit "ShipStation Mgt.";
         _jsonItemList: JsonArray;
         _jsonErrorItemList: JsonArray;
@@ -25,12 +23,6 @@ codeunit 50012 "Transfer Items To Site Mgt"
         responseText: Text;
         ItemTransferList: Record "Item Transfer Site";
     begin
-        // _Item.SetCurrentKey("Web Item", "Transfered to eShop");
-        // _Item.SetRange("Web Item", true);
-        // GetGLSetup();
-        // if GLSetup."Transfer Items Job Queue Only" then
-        //     _Item.SetRange("Transfered to eShop", false);
-
         ItemTransferList.Reset();
         Counter := 0;
         TotalCount := ItemTransferList.Count;
@@ -57,9 +49,6 @@ codeunit 50012 "Transfer Items To Site Mgt"
                         Commit();
                     end;
                     DeleteItemForTransferToSite(ItemTransferList."Item No.");
-                    // _ItemModify.Get(_Item."No.");
-                    // _ItemModify."Transfered to eShop" := true;
-                    // _ItemModify.Modify();
                 end;
             until ItemTransferList.Next() = 0;
         GetGLSetup();
@@ -68,14 +57,6 @@ codeunit 50012 "Transfer Items To Site Mgt"
             _jsonErrorItemList.WriteTo(_jsonText);
             CaptionMgt.SaveStreamToFile(_jsonText, 'errorItemList.txt');
         end;
-
-
-        // if not GLSetup."Transfer Items Job Queue Only" then begin
-        // _Item.Reset();
-        // _Item.SetCurrentKey("Transfered to eShop");
-        // _Item.SetRange("Transfered to eShop", true);
-        // _Item.ModifyAll("Transfered to eShop", false);
-        // end;
     end;
 
     local procedure MarkItemToTransfer(ItemNoFilter: Text)
@@ -109,6 +90,9 @@ codeunit 50012 "Transfer Items To Site Mgt"
         ItemForTransfer: Record Item;
         ItemTransferList: Record "Item Transfer Site";
     begin
+        GetGLSetup();
+        if not GLSetup."Transfer Items Allowed" then exit;
+
         ItemForTransfer.SetFilter("No.", ItemNoFilter);
         if ItemForTransfer.FindSet(false, true) then
             repeat
@@ -244,6 +228,9 @@ codeunit 50012 "Transfer Items To Site Mgt"
         Counter: Integer;
         responseText: Text;
     begin
+        GetGLSetup();
+        if not GLSetup."Transfer Items Allowed" then exit;
+
         _Item.SetCurrentKey("Web Item");
         _Item.SetFilter("No.", ItemNoFilter);
         _Item.SetRange("Web Item", true);
