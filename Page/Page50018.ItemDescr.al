@@ -38,4 +38,5 @@ page 50018 "Item Descr"
 
     var
         myInt: Integer;
+
 }

@@ -700,7 +700,7 @@ codeunit 50001 "ShipStation Mgt."
     begin
         if not _Item.Get(_ItemNo) or not _ItemDescr.Get(_ItemNo) then exit(_jsonObject);
 
-        _jsonObject.Add('eng', _Item.Description + _Item."Description 2");
+        _jsonObject.Add('eng', _ItemDescr."Name ENG" + _ItemDescr."Name ENG 2");
         _jsonObject.Add('ru', _ItemDescr."Name RU" + _ItemDescr."Name RU 2");
 
         exit(_jsonObject)
