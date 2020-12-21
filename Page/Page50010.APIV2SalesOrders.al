@@ -870,6 +870,7 @@ page 50010 "APIV2 - Sales Orders"
         ActionContext.AddEntityKey(Rec.FIELDNO(Id), DocumentId);
         ActionContext.SetResultCode(WebServiceActionResultCode::Deleted);
     end;
+
 }
 
 

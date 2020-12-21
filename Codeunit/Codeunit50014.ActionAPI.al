@@ -3,7 +3,7 @@ codeunit 50014 "Action API"
 
     var
         ReleaseSalesDocument: Codeunit "Release Sales Document";
-        msgSalesOrderReleased: Label 'Sales Order %1 Released';
+        msgSalesOrderReleased: Label 'sales order %1 released';
 
     procedure OnSalesOrderManualRelease(salesOrderId: Text[50]): Text
     var
