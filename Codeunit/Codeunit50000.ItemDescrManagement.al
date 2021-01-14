@@ -4,14 +4,14 @@ codeunit 50000 "Item Descr. Management"
     Permissions = tabledata "Config. Package" = rimd, tabledata "Excel Buffer" = rimd,
     tabledata "Item Description" = rimd, tabledata Item = r;
 
-    [EventSubscriber(ObjectType::Table, 27, 'OnBeforeDeleteEvent', '', true, true)]
-    local procedure DeleteItemDescription(var Rec: Record Item; RunTrigger: Boolean)
-    var
-        locItemDescription: Record "Item Description";
-    begin
-        locItemDescription.SetRange("Item No.", Rec."No.");
-        locItemDescription.DeleteAll();
-    end;
+    // [EventSubscriber(ObjectType::Table, 27, 'OnBeforeDeleteEvent', '', true, true)]
+    // local procedure DeleteItemDescription(var Rec: Record Item; RunTrigger: Boolean)
+    // var
+    //     locItemDescription: Record "Item Description";
+    // begin
+    //     locItemDescription.SetRange("Item No.", Rec."No.");
+    //     locItemDescription.DeleteAll();
+    // end;
 
     [EventSubscriber(ObjectType::Table, 370, 'OnBeforeParseCellValue', '', true, true)]
     local procedure ParseCellValue2Blob(var ExcelBuffer: Record "Excel Buffer"; var Value: Text; var FormatString: Text; var isHandled: Boolean)

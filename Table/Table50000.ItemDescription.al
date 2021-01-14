@@ -206,6 +206,20 @@ table 50000 "Item Description"
         }
     }
 
+
+    trigger OnDelete()
+    begin
+        Error(errDeleteNotAllowed);
+    end;
+
+    var
+        errDeleteNotAllowed: TextConst ENU = 'Delete Not Allowed!';
+        Text001: TextConst ENU = 'This will overwrite the contents of this field. Are you sure?';
+        Text002: TextConst ENU = 'Select the Txt file';
+        Text003: TextConst ENU = 'C:\Temp';
+        Text004: TextConst ENU = 'Txt File *.txt| *.txt';
+        Text005: TextConst ENU = 'File Successfully Uploaded';
+
     procedure InitItemDescription(ItemNo: Code[20])
     begin
         Init();
@@ -331,11 +345,4 @@ table 50000 "Item Description"
         end;
         exit(_TextField);
     end;
-
-    var
-        Text001: TextConst ENU = 'This will overwrite the contents of this field. Are you sure?';
-        Text002: TextConst ENU = 'Select the Txt file';
-        Text003: TextConst ENU = 'C:\Temp';
-        Text004: TextConst ENU = 'Txt File *.txt| *.txt';
-        Text005: TextConst ENU = 'File Successfully Uploaded';
 }
