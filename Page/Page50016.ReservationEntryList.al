@@ -12,7 +12,19 @@ page 50016 "Reservation Entry List"
         {
             repeater(ReservationEntryList)
             {
+                field("Entry No."; "Entry No.")
+                {
+                    ApplicationArea = All;
+                }
                 field("Item No."; Rec."Item No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Lot No."; Rec."Lot No.")
+                {
+                    ApplicationArea = All;
+                }
+                field(Description; Description)
                 {
                     ApplicationArea = All;
                 }
@@ -32,10 +44,7 @@ page 50016 "Reservation Entry List"
                 {
                     ApplicationArea = All;
                 }
-                field("Lot No."; Rec."Lot No.")
-                {
-                    ApplicationArea = All;
-                }
+
                 field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = All;

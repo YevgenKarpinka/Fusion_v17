@@ -1,5 +1,13 @@
 codeunit 50011 "Item Tracking Mgt."
 {
+    [EventSubscriber(ObjectType::Page, Page::"Item Tracking Lines", 'OnBeforeClosePage', '', false, false)]
+    local procedure OnBeforeClosePage(var TrackingSpecification: Record "Tracking Specification" temporary; var SkipWriteToDatabase: Boolean)
+    var
+        i: Integer;
+    begin
+        i += 1;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Reservation Management", 'OnAutoReserveItemLedgEntryOnFindFirstItemLedgEntry', '', false, false)]
     local procedure AddExpirationDateKey(var CalcItemLedgEntry: Record "Item Ledger Entry"; var InvSearch: Text[1]; var IsHandled: Boolean; var IsFound: Boolean)
     var
@@ -513,6 +521,8 @@ ToBinCode: Code[20])
         until WhsePickLine.Next() = 0;
         WhseMoveNo := WhseMoveHeader."No.";
     end;
+
+
 
     var
         glItemLedgerEntry: Record "Item Ledger Entry";

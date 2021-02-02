@@ -1,7 +1,7 @@
 table 50003 "Bank Check Journal Line"
 {
     DataClassification = ToBeClassified;
-    CaptionML = ENU = 'Source Parameters', RUS = 'Параметры подключения';
+    CaptionML = ENU = 'Bank Check Journal Line', RUS = 'Bank Check Journal Line';
 
     fields
     {
