@@ -16,7 +16,7 @@ pageextension 50005 "Sales Order Ext." extends "Sales Order"
             {
                 ApplicationArea = Basic, Suite;
                 Provider = SalesLines;
-                SubPageLink = "Item No." = field("No."), "Location Code" = field("Location Code"), "Variant Code" = field("Variant Code"), "Unit of Measure Code" = field("Unit of Measure Code");
+                SubPageLink = "Item No." = field("No."), "Location Code" = field("Location Code");//, "Variant Code" = field("Variant Code"), "Unit of Measure Code" = field("Unit of Measure Code");
                 SubPageView = sorting("Expiration Date") where(Open = const(true), Positive = const(true));
             }
             part(ItemTrackingLine; "Item Tracking Line FactBox")

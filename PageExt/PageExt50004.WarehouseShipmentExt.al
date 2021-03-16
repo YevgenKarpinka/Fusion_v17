@@ -36,48 +36,48 @@ pageextension 50004 "Warehouse Shipment Ext." extends "Warehouse Shipment"
     actions
     {
         // Add changes to page actions here
-        addbefore("Create Pick")
-        {
-            action("Movement Lines")
-            {
-                ApplicationArea = Warehouse;
-                CaptionML = ENU = 'Movement Lines',
-                            RUS = 'Строки передвижения';
-                Image = PickLines;
-                Promoted = true;
-                PromotedCategory = Process;
-                RunObject = Page "Warehouse Activity Lines";
-                RunPageLink = "Whse. Document Type" = CONST(Shipment),
-                                  "Whse. Document No." = FIELD("No.");
-                RunPageView = SORTING("Whse. Document No.", "Whse. Document Type", "Activity Type")
-                                  WHERE("Activity Type" = CONST(Movement));
-                ToolTip = 'View the related movements.';
-            }
-        }
-        modify("Create Pick")
-        {
-            Visible = false;
-        }
-        addbefore("Create Pick")
-        {
-            action("Create Pick Available")
-            {
-                ApplicationArea = Warehouse;
-                CaptionML = ENU = 'Create Pick or Movement',
-                            RUS = 'Создать подбор или передвижение';
-                Ellipsis = true;
-                Image = CreateInventoryPickup;
-                Promoted = true;
-                PromotedCategory = Process;
-                ToolTip = 'Create a warehouse pick for the items to be shipped or warehouse movement.';
+        // addbefore("Create Pick")
+        // {
+        //     action("Movement Lines")
+        //     {
+        //         ApplicationArea = Warehouse;
+        //         CaptionML = ENU = 'Movement Lines',
+        //                     RUS = 'Строки передвижения';
+        //         Image = PickLines;
+        //         Promoted = true;
+        //         PromotedCategory = Process;
+        //         RunObject = Page "Warehouse Activity Lines";
+        //         RunPageLink = "Whse. Document Type" = CONST(Shipment),
+        //                           "Whse. Document No." = FIELD("No.");
+        //         RunPageView = SORTING("Whse. Document No.", "Whse. Document Type", "Activity Type")
+        //                           WHERE("Activity Type" = CONST(Movement));
+        //         ToolTip = 'View the related movements.';
+        //     }
+        // }
+        // modify("Create Pick")
+        // {
+        //     Visible = false;
+        // }
+        // addbefore("Create Pick")
+        // {
+        //     action("Create Pick Available")
+        //     {
+        //         ApplicationArea = Warehouse;
+        //         CaptionML = ENU = 'Create Pick or Movement',
+        //                     RUS = 'Создать подбор или передвижение';
+        //         Ellipsis = true;
+        //         Image = CreateInventoryPickup;
+        //         Promoted = true;
+        //         PromotedCategory = Process;
+        //         ToolTip = 'Create a warehouse pick for the items to be shipped or warehouse movement.';
 
-                trigger OnAction()
-                begin
-                    CurrPage.Update(true);
-                    CurrPage.WhseShptLines.PAGE.PickCreateAvailable;
-                end;
-            }
-        }
+        //         trigger OnAction()
+        //         begin
+        //             CurrPage.Update(true);
+        //             CurrPage.WhseShptLines.PAGE.PickCreateAvailable;
+        //         end;
+        //     }
+        // }
     }
 
     var

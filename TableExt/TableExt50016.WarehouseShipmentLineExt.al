@@ -25,16 +25,16 @@ tableextension 50016 "Warehouse Shipment Line Ext." extends "Warehouse Shipment 
     local procedure CreatePickDocFromWhseShptAlailable(var WhseShptLine: Record "Warehouse Shipment Line"; WhseShptHeader: Record "Warehouse Shipment Header"; HideValidationDialog: Boolean)
     var
         WhseShipmentCreatePick: Report "Whse.-Shpt Create Pick Avail";
-        IsHandled: Boolean;
+    // IsHandled: Boolean;
     begin
-        IsHandled := false;
-        if not IsHandled then begin
-            WhseShipmentCreatePick.SetWhseShipmentLine(WhseShptLine, WhseShptHeader);
-            WhseShipmentCreatePick.SetHideValidationDialog(HideValidationDialog);
-            WhseShipmentCreatePick.UseRequestPage(not HideValidationDialog);
-            WhseShipmentCreatePick.RunModal;
-            WhseShipmentCreatePick.GetResultMessage;
-            Clear(WhseShipmentCreatePick);
-        end;
+        // IsHandled := false;
+        // if not IsHandled then begin
+        WhseShipmentCreatePick.SetWhseShipmentLine(WhseShptLine, WhseShptHeader);
+        WhseShipmentCreatePick.SetHideValidationDialog(HideValidationDialog);
+        WhseShipmentCreatePick.UseRequestPage(not HideValidationDialog);
+        WhseShipmentCreatePick.RunModal;
+        WhseShipmentCreatePick.GetResultMessage;
+        Clear(WhseShipmentCreatePick);
+        // end;
     end;
 }
