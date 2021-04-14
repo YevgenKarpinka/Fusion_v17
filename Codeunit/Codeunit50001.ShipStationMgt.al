@@ -1572,8 +1572,10 @@ codeunit 50001 "ShipStation Mgt."
         WhseShipmentLine.SetRange("No.", WhseShipmentNo);
         if not WhseShipmentLine.FindFirst() then exit('');
 
-        SalesHeader.Get(SalesHeader."Document Type"::Order, WhseShipmentLine."Source No.");
-        exit(SalesHeader."Sell-to Customer Name");
+        if SalesHeader.Get(SalesHeader."Document Type"::Order, WhseShipmentLine."Source No.") then
+            exit(SalesHeader."Sell-to Customer Name");
+
+        exit('');
     end;
 
     procedure GetCustomerNameFromWhsePick(WhsePickNo: Code[20]): Text
@@ -1584,8 +1586,10 @@ codeunit 50001 "ShipStation Mgt."
         WhseActivityLine.SetRange("No.", WhsePickNo);
         if not WhseActivityLine.FindFirst() then exit('');
 
-        SalesHeader.Get(SalesHeader."Document Type"::Order, WhseActivityLine."Source No.");
-        exit(SalesHeader."Sell-to Customer Name");
+        if SalesHeader.Get(SalesHeader."Document Type"::Order, WhseActivityLine."Source No.") then
+            exit(SalesHeader."Sell-to Customer Name");
+
+        exit('');
     end;
 
     procedure CreateDeliverySalesLine(SalesOrderNo: Code[20]; customerNo: Code[20])
