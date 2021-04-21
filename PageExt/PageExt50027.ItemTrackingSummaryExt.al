@@ -22,7 +22,13 @@ pageextension 50027 "Item Tracking Summary Ext" extends "Item Tracking Summary"
     local procedure GetDescriptionLotNo(LotNo: Code[50]): Text[100]
     var
         ReservationEntry: Record "Reservation Entry";
+        TrackingSpecification: Record "Tracking Specification";
     begin
+        TrackingSpecification.SetCurrentKey("Lot No.");
+        TrackingSpecification.SetRange("Lot No.", LotNo);
+        if TrackingSpecification.FindFirst() then
+            exit(TrackingSpecification.Description);
+
         ReservationEntry.SetCurrentKey("Lot No.");
         ReservationEntry.SetRange("Lot No.", LotNo);
         if ReservationEntry.FindFirst() then
